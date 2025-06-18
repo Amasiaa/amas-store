@@ -19,6 +19,12 @@ object ProfileScreen
 object SearchScreen
 
 @Serializable
+object LoginScreen
+
+@Serializable
+object RegisterScreen
+
+@Serializable
 object CartSummaryScreen
 
 @Serializable

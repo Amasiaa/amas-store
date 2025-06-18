@@ -1,5 +1,7 @@
 package mg.amas.amasstore.di
 
+import mg.amas.amasstore.ui.features.auth.login.LoginViewModel
+import mg.amas.amasstore.ui.features.auth.register.RegisterViewModel
 import mg.amas.amasstore.ui.features.cart.CartViewModel
 import mg.amas.amasstore.ui.features.home.HomeViewModel
 import mg.amas.amasstore.ui.features.orders.OrdersViewModel
@@ -15,4 +17,6 @@ val viewModelModule =
         viewModel { CartSummaryViewModel(get(), get()) }
         viewModel { CartViewModel(get(), get(), get()) }
         viewModel { OrdersViewModel(get()) }
+        viewModel { LoginViewModel(get()) }
+        viewModel { RegisterViewModel(get()) }
     }

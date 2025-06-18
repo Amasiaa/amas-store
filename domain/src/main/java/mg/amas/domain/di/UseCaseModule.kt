@@ -6,8 +6,10 @@ import mg.amas.domain.usecase.DeleteProductUseCase
 import mg.amas.domain.usecase.GetCartUseCase
 import mg.amas.domain.usecase.GetCategoriesUseCase
 import mg.amas.domain.usecase.GetProductUseCase
+import mg.amas.domain.usecase.LoginUseCase
 import mg.amas.domain.usecase.OrderListUseCase
 import mg.amas.domain.usecase.PlaceOrderUseCase
+import mg.amas.domain.usecase.RegisterUseCase
 import mg.amas.domain.usecase.UpdateQuantityUseCase
 import org.koin.dsl.module
 
@@ -22,4 +24,6 @@ val useCaseModule =
         factory { CartSummaryUseCase(get()) }
         factory { PlaceOrderUseCase(get()) }
         factory { OrderListUseCase(get()) }
+        factory { LoginUseCase(get()) }
+        factory { RegisterUseCase(get()) }
     }

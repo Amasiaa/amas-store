@@ -7,6 +7,7 @@ import mg.amas.domain.model.CartSummary
 import mg.amas.domain.model.CategoriesListModel
 import mg.amas.domain.model.OrdersListModel
 import mg.amas.domain.model.ProductListModel
+import mg.amas.domain.model.UserDomainModel
 import mg.amas.domain.model.request.AddCartRequestModel
 
 interface NetworkService {
@@ -33,6 +34,17 @@ interface NetworkService {
     ): ResultWrapper<Long>
 
     suspend fun getOrderList(): ResultWrapper<OrdersListModel>
+
+    suspend fun login(
+        email: String,
+        password: String,
+    ): ResultWrapper<UserDomainModel>
+
+    suspend fun register(
+        email: String,
+        password: String,
+        name: String,
+    ): ResultWrapper<UserDomainModel>
 }
 
 sealed class ResultWrapper<out T> {

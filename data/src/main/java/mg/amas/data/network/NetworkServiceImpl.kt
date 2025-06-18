@@ -15,12 +15,15 @@ import io.ktor.utils.io.errors.IOException
 import mg.amas.data.model.request.AddToCartRequest
 import mg.amas.data.model.request.AddToCartRequest.Companion.fromCartRequestModel
 import mg.amas.data.model.request.AddressDataModel
+import mg.amas.data.model.request.LoginRequest
+import mg.amas.data.model.request.RegisterRequest
 import mg.amas.data.model.response.CartResponse
 import mg.amas.data.model.response.CartSummaryResponse
 import mg.amas.data.model.response.CategoriesListResponse
 import mg.amas.data.model.response.OrdersListResponse
 import mg.amas.data.model.response.PlaceOrderResponse
 import mg.amas.data.model.response.ProductListResponse
+import mg.amas.data.model.response.UserAuthResponse
 import mg.amas.domain.model.AddressDomainModel
 import mg.amas.domain.model.CartItemModel
 import mg.amas.domain.model.CartModel
@@ -28,6 +31,7 @@ import mg.amas.domain.model.CartSummary
 import mg.amas.domain.model.CategoriesListModel
 import mg.amas.domain.model.OrdersListModel
 import mg.amas.domain.model.ProductListModel
+import mg.amas.domain.model.UserDomainModel
 import mg.amas.domain.model.request.AddCartRequestModel
 import mg.amas.domain.network.NetworkService
 import mg.amas.domain.network.ResultWrapper
@@ -149,6 +153,37 @@ class NetworkServiceImpl(
             method = HttpMethod.Get,
             mapper = { ordersResponse: OrdersListResponse ->
                 ordersResponse.toDomainResponse()
+            },
+        )
+    }
+
+    override suspend fun login(
+        email: String,
+        password: String,
+    ): ResultWrapper<UserDomainModel> {
+        val url = "$baseUrl/login"
+        return makeWebRequest(
+            url = url,
+            method = HttpMethod.Post,
+            body = LoginRequest(email, password),
+            mapper = { user: UserAuthResponse ->
+                user.`data`.toDomainModel()
+            },
+        )
+    }
+
+    override suspend fun register(
+        email: String,
+        password: String,
+        name: String,
+    ): ResultWrapper<UserDomainModel> {
+        val url = "$baseUrl/signup"
+        return makeWebRequest(
+            url = url,
+            method = HttpMethod.Post,
+            body = RegisterRequest(email, password, name),
+            mapper = { user: UserAuthResponse ->
+                user.`data`.toDomainModel()
             },
         )
     }

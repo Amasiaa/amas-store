@@ -36,9 +36,11 @@ import mg.amas.amasstore.model.UIProductModel
 import mg.amas.amasstore.navigation.CartScreen
 import mg.amas.amasstore.navigation.CartSummaryScreen
 import mg.amas.amasstore.navigation.HomeScreen
+import mg.amas.amasstore.navigation.LoginScreen
 import mg.amas.amasstore.navigation.OrdersScreen
 import mg.amas.amasstore.navigation.ProductDetails
 import mg.amas.amasstore.navigation.ProfileScreen
+import mg.amas.amasstore.navigation.RegisterScreen
 import mg.amas.amasstore.navigation.SearchScreen
 import mg.amas.amasstore.navigation.UserAddressRoute
 import mg.amas.amasstore.navigation.UserAddressRouteWrapper
@@ -69,7 +71,7 @@ class MainActivity : ComponentActivity() {
                     Surface(modifier = Modifier.fillMaxSize().padding(it)) {
                         NavHost(
                             navController = navController,
-                            startDestination = HomeScreen,
+                            startDestination = if (AmasStoreSession.getUser() != null) HomeScreen else LoginScreen,
                         ) {
                             composable<HomeScreen> {
                                 HomeScreen(navController = navController)
@@ -98,6 +100,16 @@ class MainActivity : ComponentActivity() {
                                 shouldShowBottomNav.value = true
                                 mg.amas.amasstore.ui.features.orders
                                     .OrdersScreen(navController = navController)
+                            }
+                            composable<LoginScreen> {
+                                shouldShowBottomNav.value = false
+                                mg.amas.amasstore.ui.features.auth.login
+                                    .LoginScreen(navController = navController)
+                            }
+                            composable<RegisterScreen> {
+                                shouldShowBottomNav.value = false
+                                mg.amas.amasstore.ui.features.auth.register
+                                    .RegisterScreen(navController = navController)
                             }
                             composable<ProfileScreen> {
                                 shouldShowBottomNav.value = true
