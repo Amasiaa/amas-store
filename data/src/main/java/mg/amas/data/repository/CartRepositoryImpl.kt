@@ -11,18 +11,22 @@ import mg.amas.domain.repository.CartRepository
 class CartRepositoryImpl(
     private val networkService: NetworkService,
 ) : CartRepository {
-    override suspend fun addProductToCart(request: AddCartRequestModel): ResultWrapper<CartModel> =
-        networkService.addProductToCart(request = request)
+    override suspend fun addProductToCart(
+        request: AddCartRequestModel,
+        userId: Long,
+    ): ResultWrapper<CartModel> = networkService.addProductToCart(request = request, userId = userId)
 
-    override suspend fun getCart(): ResultWrapper<CartModel> = networkService.getCart()
+    override suspend fun getCart(userId: Long): ResultWrapper<CartModel> = networkService.getCart(userId)
 
-    override suspend fun updateQuantity(cartItemModel: CartItemModel): ResultWrapper<CartModel> =
-        networkService.updateQuantity(cartItemModel)
+    override suspend fun updateQuantity(
+        cartItemModel: CartItemModel,
+        userId: Long,
+    ): ResultWrapper<CartModel> = networkService.updateQuantity(cartItemModel, userId)
 
     override suspend fun deleteItem(
         cartItemId: Int,
-        userId: Int,
+        userId: Long,
     ): ResultWrapper<CartModel> = networkService.deleteItem(cartItemId, userId)
 
-    override suspend fun getCartSummary(userId: Int): ResultWrapper<CartSummary> = networkService.getCartSummary(userId)
+    override suspend fun getCartSummary(userId: Long): ResultWrapper<CartSummary> = networkService.getCartSummary(userId)
 }

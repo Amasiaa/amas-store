@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import mg.amas.amasstore.AmasStoreSession
 import mg.amas.domain.model.OrdersData
 import mg.amas.domain.network.ResultWrapper
 import mg.amas.domain.usecase.OrderListUseCase
@@ -14,6 +15,7 @@ class OrdersViewModel(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<OrdersEvent>(OrdersEvent.Loading)
     val uiState = _uiState.asStateFlow()
+    val userDomainModel = AmasStoreSession.getUser()
 
     init {
         getOrderList()
@@ -22,7 +24,7 @@ class OrdersViewModel(
     private fun getOrderList() {
         viewModelScope.launch {
             _uiState.value = OrdersEvent.Loading
-            orderListUseCase.execute().let { result ->
+            orderListUseCase.execute(userDomainModel!!.id!!.toLong()).let { result ->
                 when (result) {
                     is ResultWrapper.Success -> {
                         _uiState.value = OrdersEvent.Success(result.value.data)

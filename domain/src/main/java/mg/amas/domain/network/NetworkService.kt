@@ -15,25 +15,31 @@ interface NetworkService {
 
     suspend fun getCategories(): ResultWrapper<CategoriesListModel>
 
-    suspend fun addProductToCart(request: AddCartRequestModel): ResultWrapper<CartModel>
+    suspend fun addProductToCart(
+        request: AddCartRequestModel,
+        userId: Long,
+    ): ResultWrapper<CartModel>
 
-    suspend fun getCart(): ResultWrapper<CartModel>
+    suspend fun getCart(userId: Long): ResultWrapper<CartModel>
 
-    suspend fun updateQuantity(cartItemModel: CartItemModel): ResultWrapper<CartModel>
+    suspend fun updateQuantity(
+        cartItemModel: CartItemModel,
+        userId: Long,
+    ): ResultWrapper<CartModel>
 
     suspend fun deleteItem(
         cartItemId: Int,
-        userId: Int,
+        userId: Long,
     ): ResultWrapper<CartModel>
 
-    suspend fun getCartSummary(userId: Int): ResultWrapper<CartSummary>
+    suspend fun getCartSummary(userId: Long): ResultWrapper<CartSummary>
 
     suspend fun placeOrder(
         addressDomainModel: AddressDomainModel,
-        userId: Int,
+        userId: Long,
     ): ResultWrapper<Long>
 
-    suspend fun getOrderList(): ResultWrapper<OrdersListModel>
+    suspend fun getOrderList(userId: Long): ResultWrapper<OrdersListModel>
 
     suspend fun login(
         email: String,

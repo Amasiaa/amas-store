@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import mg.amas.amasstore.AmasStoreSession
 import mg.amas.domain.model.CartItemModel
 import mg.amas.domain.network.ResultWrapper
 import mg.amas.domain.usecase.DeleteProductUseCase
@@ -18,6 +19,7 @@ class CartViewModel(
 ) : ViewModel() {
     private val _uiEvent = MutableStateFlow<CartEvent>(CartEvent.Loading)
     val uiEvent = _uiEvent.asStateFlow()
+    val userDomainModel = AmasStoreSession.getUser()
 
     init {
         getCart()
@@ -26,7 +28,7 @@ class CartViewModel(
     fun getCart() {
         viewModelScope.launch {
             _uiEvent.value = CartEvent.Loading
-            cartUseCase.execute().let { result ->
+            cartUseCase.execute(userDomainModel!!.id!!.toLong()).let { result ->
                 when (result) {
                     is ResultWrapper.Success -> {
                         _uiEvent.value = CartEvent.Success(cartItems = result.value.data)
@@ -52,7 +54,7 @@ class CartViewModel(
     private fun updateQuantity(cartItem: CartItemModel) {
         viewModelScope.launch {
             _uiEvent.value = CartEvent.Loading
-            updateQuantityUseCase.execute(cartItem).let { result ->
+            updateQuantityUseCase.execute(cartItem, userDomainModel!!.id!!.toLong()).let { result ->
                 when (result) {
                     is ResultWrapper.Success -> {
                         _uiEvent.value = CartEvent.Success(cartItems = result.value.data)

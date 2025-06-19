@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -60,7 +61,7 @@ fun LoginScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 CircularProgressIndicator(modifier = Modifier.size(48.dp))
-                Text(text = "Login...", style = MaterialTheme.typography.bodyMedium)
+                Text(text = stringResource(id = R.string.loading_login), style = MaterialTheme.typography.bodyMedium)
             }
         }
         is LoginEvent.Error -> {
@@ -107,7 +108,7 @@ fun LoginContent(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = "Login",
+            text = stringResource(id = R.string.login),
             style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.W900),
         )
         OutlinedTextField(
@@ -119,7 +120,7 @@ fun LoginContent(
                 KeyboardOptions(
                     keyboardType = KeyboardType.Email,
                 ),
-            label = { Text(text = "Email") },
+            label = { Text(text = stringResource(id = R.string.name)) },
             leadingIcon = { Icon(Icons.Outlined.Email, contentDescription = null) },
             colors =
                 OutlinedTextFieldDefaults.colors().copy(
@@ -140,7 +141,7 @@ fun LoginContent(
                 KeyboardOptions(
                     keyboardType = KeyboardType.Password,
                 ),
-            label = { Text(text = "Password") },
+            label = { Text(text = stringResource(id = R.string.password)) },
             visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(mask = '*'),
             leadingIcon = {
                 Icon(
@@ -175,7 +176,7 @@ fun LoginContent(
             modifier = Modifier.fillMaxWidth(0.75f),
             enabled = email.isNotEmpty() && password.isNotEmpty(),
         ) {
-            Text(text = "Login")
+            Text(text = stringResource(id = R.string.login))
         }
 
         Spacer(modifier = Modifier.size(40.dp))
@@ -185,10 +186,10 @@ fun LoginContent(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(text = "Don't have an account? ", style = MaterialTheme.typography.bodyMedium)
+            Text(text = stringResource(id = R.string.not_have_account), style = MaterialTheme.typography.bodyMedium)
             TextButton(onClick = { onSignUpClicked() }) {
                 Text(
-                    text = "Register",
+                    text = stringResource(id = R.string.register),
                     style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.W600),
                 )
             }

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import mg.amas.amasstore.AmasStoreSession
 import mg.amas.amasstore.model.UserAddress
 import mg.amas.domain.model.CartSummary
 import mg.amas.domain.network.ResultWrapper
@@ -17,12 +18,13 @@ class CartSummaryViewModel(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<CartSummaryEvent>(CartSummaryEvent.Loading)
     val uiState = _uiState.asStateFlow()
+    val userDomainModel = AmasStoreSession.getUser()
 
     init {
-        getCartSummary(1)
+        getCartSummary(userDomainModel!!.id!!.toLong())
     }
 
-    private fun getCartSummary(userId: Int) {
+    private fun getCartSummary(userId: Long) {
         viewModelScope.launch {
             _uiState.value = CartSummaryEvent.Loading
             cartSummaryUseCase.execute(userId).let { summary ->
@@ -42,7 +44,7 @@ class CartSummaryViewModel(
     fun placeOrder(userAddress: UserAddress) {
         viewModelScope.launch {
             _uiState.value = CartSummaryEvent.Loading
-            placeOrderUseCase.execute(userAddress.toAddressDomainModel()).let { orderId ->
+            placeOrderUseCase.execute(userAddress.toAddressDomainModel(), userDomainModel!!.id!!.toLong()).let { orderId ->
                 when (orderId) {
                     is ResultWrapper.Success -> {
                         _uiState.value = CartSummaryEvent.PlaceOrder(orderId.value)

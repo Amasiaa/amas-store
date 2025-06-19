@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Amas Store</string>
+    <string name="loading_login">Chargement....</string>
+    <string name="loading_register">Enregistrement....</string>
+    <string name="register">S\'inscrire</string>
+    <string name="login">Se connecter</string>
+    <string name="name">Nom</string>
+    <string name="email">Email</string>
+    <string name="password">Mot de passe</string>
+    <string name="not_have_account">Vous n\'avez pas de compte ? </string>
+    <string name="have_account">Vous avez déjà un compte ? </string>
+</resources>

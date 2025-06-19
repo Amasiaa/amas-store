@@ -49,6 +49,7 @@ import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import mg.amas.amasstore.R
 import mg.amas.amasstore.model.UIProductModel
+import mg.amas.amasstore.navigation.CartScreen
 import mg.amas.amasstore.navigation.ProductDetails
 import mg.amas.domain.model.Product
 import org.koin.androidx.compose.koinViewModel
@@ -101,15 +102,23 @@ fun HomeScreen(
                     loading.value = false
                 }
             }
-            HomeContent(featured.value, popular.value, categories.value, loading.value, error.value, onTap = {
-                navController.navigate(ProductDetails(UIProductModel.fromProduct(it)))
-            })
+            HomeContent(
+                featured.value,
+                popular.value,
+                categories.value,
+                loading.value,
+                error.value,
+                onTap = {
+                    navController.navigate(ProductDetails(UIProductModel.fromProduct(it)))
+                },
+                onCartClicked = { navController.navigate(CartScreen) },
+            )
         }
     }
 }
 
 @Composable
-fun ProfileHeader() {
+fun ProfileHeader(onCartClicked: () -> Unit) {
     Box(
         modifier =
             Modifier
@@ -137,18 +146,36 @@ fun ProfileHeader() {
                 Text(text = "John Doe", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
             }
         }
-        Image(
-            painter = painterResource(id = R.drawable.baseline_notifications_24),
-            contentDescription = null,
+        Row(
             modifier =
                 Modifier
-                    .size(48.dp)
-                    .align(Alignment.CenterEnd)
-                    .clip(CircleShape)
-                    .background(Color.LightGray.copy(alpha = 0.3f))
-                    .padding(8.dp),
-            contentScale = ContentScale.Inside,
-        )
+                    .align(Alignment.CenterEnd),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.notificatino),
+                contentDescription = null,
+                modifier =
+                    Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(Color.LightGray.copy(alpha = 0.3f))
+                        .padding(8.dp),
+                contentScale = ContentScale.Inside,
+            )
+            Image(
+                painter = painterResource(id = R.drawable.ic_cart),
+                contentDescription = null,
+                modifier =
+                    Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(Color.LightGray.copy(alpha = 0.3f))
+                        .padding(8.dp)
+                        .clickable { onCartClicked() },
+                contentScale = ContentScale.Inside,
+            )
+        }
     }
 }
 
@@ -160,10 +187,11 @@ fun HomeContent(
     isLoading: Boolean = false,
     errorMessage: String? = null,
     onTap: (Product) -> Unit,
+    onCartClicked: () -> Unit,
 ) {
     LazyColumn {
         item {
-            ProfileHeader()
+            ProfileHeader(onCartClicked = onCartClicked)
             Spacer(modifier = Modifier.size(16.dp))
             SearchBar(value = "", onTextChanged = {})
             Spacer(modifier = Modifier.size(16.dp))

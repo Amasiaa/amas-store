@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import mg.amas.amasstore.AmasStoreSession
 import mg.amas.amasstore.model.UIProductModel
 import mg.amas.domain.model.request.AddCartRequestModel
 import mg.amas.domain.network.ResultWrapper
@@ -15,6 +16,7 @@ class ProductDetailsViewModel(
 ) : ViewModel() {
     private val _uiEvent = MutableStateFlow<ProductDetailsEvent>(ProductDetailsEvent.Nothing)
     val uiEvent = _uiEvent.asStateFlow()
+    val userDomainModel = AmasStoreSession.getUser()
 
     fun addProductToCart(product: UIProductModel) {
         viewModelScope.launch {
@@ -26,8 +28,9 @@ class ProductDetailsViewModel(
                         product.title,
                         product.price,
                         1,
-                        1,
+                        userDomainModel!!.id!!.toLong(),
                     ),
+                    userDomainModel.id!!.toLong(),
                 )
             when (result) {
                 is ResultWrapper.Success -> {

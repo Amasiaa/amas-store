@@ -6,5 +6,8 @@ import mg.amas.domain.repository.OrderRepository
 class PlaceOrderUseCase(
     private val repository: OrderRepository,
 ) {
-    suspend fun execute(addressDomainModel: AddressDomainModel) = repository.placeOrder(addressDomainModel)
+    suspend fun execute(
+        addressDomainModel: AddressDomainModel,
+        userId: Long,
+    ) = repository.placeOrder(addressDomainModel, userId)
 }

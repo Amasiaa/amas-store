@@ -34,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -43,7 +44,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import mg.amas.amasstore.R
 import mg.amas.amasstore.navigation.HomeScreen
-import mg.amas.amasstore.navigation.LoginScreen
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -61,7 +61,7 @@ fun RegisterScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 CircularProgressIndicator(modifier = Modifier.size(48.dp))
-                Text(text = "Registering...", style = MaterialTheme.typography.bodyMedium)
+                Text(text = stringResource(id = R.string.loading_register), style = MaterialTheme.typography.bodyMedium)
             }
         }
         is RegisterEvent.Error -> {
@@ -109,8 +109,8 @@ fun RegisterContent(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = "Register",
-            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.W900)
+            text = stringResource(id = R.string.register),
+            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.W900),
         )
         OutlinedTextField(
             value = name,
@@ -121,7 +121,7 @@ fun RegisterContent(
                 KeyboardOptions(
                     keyboardType = KeyboardType.Email,
                 ),
-            label = { Text(text = "Name") },
+            label = { Text(text = stringResource(id = R.string.name)) },
             leadingIcon = { Icon(Icons.Outlined.Person, contentDescription = null) },
             colors =
                 OutlinedTextFieldDefaults.colors().copy(
@@ -142,7 +142,7 @@ fun RegisterContent(
                 KeyboardOptions(
                     keyboardType = KeyboardType.Email,
                 ),
-            label = { Text(text = "Email") },
+            label = { Text(text = stringResource(id = R.string.email)) },
             leadingIcon = { Icon(Icons.Outlined.Email, contentDescription = null) },
             colors =
                 OutlinedTextFieldDefaults.colors().copy(
@@ -163,7 +163,7 @@ fun RegisterContent(
                 KeyboardOptions(
                     keyboardType = KeyboardType.Password,
                 ),
-            label = { Text(text = "Password") },
+            label = { Text(text = stringResource(id = R.string.password)) },
             visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(mask = '*'),
             leadingIcon = {
                 Icon(
@@ -198,7 +198,7 @@ fun RegisterContent(
             modifier = Modifier.fillMaxWidth(0.75f),
             enabled = email.isNotEmpty() && password.isNotEmpty() && name.isNotEmpty(),
         ) {
-            Text(text = "Register")
+            Text(text = stringResource(id = R.string.register))
         }
 
         Spacer(modifier = Modifier.size(40.dp))
@@ -208,10 +208,10 @@ fun RegisterContent(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(text = "Already have an account? ", style = MaterialTheme.typography.bodyMedium)
+            Text(text = stringResource(id = R.string.have_account), style = MaterialTheme.typography.bodyMedium)
             TextButton(onClick = { onSignInClicked() }) {
                 Text(
-                    text = "Login",
+                    text = stringResource(id = R.string.login),
                     style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.W600),
                 )
             }

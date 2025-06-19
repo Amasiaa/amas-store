@@ -92,7 +92,7 @@ class MainActivity : ComponentActivity() {
                                     .CartSummaryScreen(navController)
                             }
                             composable<CartScreen> {
-                                shouldShowBottomNav.value = true
+                                shouldShowBottomNav.value = false
                                 mg.amas.amasstore.ui.features.cart
                                     .CartScreen(navController)
                             }

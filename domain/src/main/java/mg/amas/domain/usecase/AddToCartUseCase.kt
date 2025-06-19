@@ -6,5 +6,8 @@ import mg.amas.domain.repository.CartRepository
 class AddToCartUseCase(
     private val repository: CartRepository,
 ) {
-    suspend fun execute(request: AddCartRequestModel) = repository.addProductToCart(request = request)
+    suspend fun execute(
+        request: AddCartRequestModel,
+        userId: Long,
+    ) = repository.addProductToCart(request = request, userId = userId)
 }

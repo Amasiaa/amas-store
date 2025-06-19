@@ -7,6 +7,6 @@ class DeleteProductUseCase(
 ) {
     suspend fun execute(
         cartItemId: Int,
-        userId: Int,
+        userId: Long,
     ) = cartRepository.deleteItem(cartItemId, userId)
 }

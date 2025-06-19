@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Amas Store</string>
+    <string name="loading_login">Login....</string>
+    <string name="loading_register">Registering....</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="not_have_account">Don\'t have an account? </string>
+    <string name="have_account">Already have an account? </string>
 </resources>
